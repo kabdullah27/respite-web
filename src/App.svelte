@@ -1,6 +1,6 @@
 <script>
   const REPO = 'https://github.com/kabdullah27/respite'
-  const KOFI = 'https://ko-fi.com/kabdullah'
+  const KOFI = 'https://ko-fi.com/s/b18fe31629'
 
   const stats = [
     { value: '45–48 MB', label: 'idle memory footprint', sub: 'lighter than most browser tabs' },
