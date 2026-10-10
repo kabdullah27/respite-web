@@ -23,3 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local only: Claude Code preview config and Ko-fi upload screenshots
+.claude
+kofi-screens
