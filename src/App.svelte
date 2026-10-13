@@ -1,5 +1,5 @@
 <script>
-  import { copy, REPO, KOFI, TIP, VERSION, SITE } from './copy.js'
+  import { copy, REPO, KOFI, TIP, VERSION, SITE, AUTHOR_SITE } from './copy.js'
   import ScanDemo from './ScanDemo.svelte'
 
   // Language comes from the URL (/ or /id/) so each version is its own
@@ -11,6 +11,7 @@
   const jsonLd = $derived(JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
+    '@id': SITE + '/#app',
     name: 'Respite',
     description: t.meta.description,
     url: SITE + t.path,
@@ -24,7 +25,8 @@
     license: 'https://www.gnu.org/licenses/gpl-3.0.html',
     isAccessibleForFree: true,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    author: { '@type': 'Person', name: 'Khalid' },
+    // Same @id as the Person on kabdullah.web.id, so both sites describe one author.
+    author: { '@type': 'Person', '@id': AUTHOR_SITE + '#person', name: 'K. Abdullah', url: AUTHOR_SITE },
     sameAs: [REPO],
   }).replace(/</g, '\\u003c'))
 
@@ -235,7 +237,7 @@
 
 <footer class="site">
   <div class="wrap">
-    <p>{t.footer.line}</p>
+    <p>{t.footer.line} <a href={AUTHOR_SITE} rel="author">{t.footer.madeBy}</a></p>
     <div>
       <a href={REPO} target="_blank" rel="noopener noreferrer">{t.footer.github}</a>
       <a href={TIP} target="_blank" rel="noopener noreferrer">{t.footer.kofi}</a>
