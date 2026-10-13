@@ -6,6 +6,7 @@ export const KOFI = 'https://ko-fi.com/s/b18fe31629'
 export const TIP = 'https://ko-fi.com/kabdullah'
 export const VERSION = '1.2'
 export const SITE = 'https://respite.kabdullah.web.id'
+export const AUTHOR_SITE = 'https://kabdullah.web.id/'
 
 export const copy = {
   en: {
@@ -163,6 +164,7 @@ export const copy = {
 
     footer: {
       line: 'Respite is open source under GPL-3.0.',
+      madeBy: 'Made by K. Abdullah',
       github: 'GitHub',
       kofi: 'Ko-fi',
     },
@@ -323,6 +325,7 @@ export const copy = {
 
     footer: {
       line: 'Respite adalah open source dengan lisensi GPL-3.0.',
+      madeBy: 'Dibuat oleh K. Abdullah',
       github: 'GitHub',
       kofi: 'Ko-fi',
     },
