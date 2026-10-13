@@ -5,9 +5,18 @@ export const REPO = 'https://github.com/kabdullah27/respite'
 export const KOFI = 'https://ko-fi.com/s/b18fe31629'
 export const TIP = 'https://ko-fi.com/kabdullah'
 export const VERSION = '1.2'
+export const SITE = 'https://respite.kabdullah.web.id'
 
 export const copy = {
   en: {
+    path: '/',
+    meta: {
+      title: 'Respite: a free Mac cleaner that asks before it deletes',
+      description: 'Free, open-source Mac cleaner. Respite finds caches, app leftovers and duplicate files, explains each one in plain words, and moves only what you approve to the Trash.',
+      locale: 'en_US',
+      image: '/og.png',
+      imageAlt: 'Respite, a Mac cleaner that asks first, next to its Home screen',
+    },
     nav: { tools: 'Tools', safety: 'Safety', faq: 'Questions', download: 'Download' },
     langLabel: 'Language',
 
@@ -160,6 +169,14 @@ export const copy = {
   },
 
   id: {
+    path: '/id/',
+    meta: {
+      title: 'Respite: pembersih Mac gratis yang bertanya dulu sebelum menghapus',
+      description: 'Pembersih Mac gratis dan open source. Respite mencari cache, sisa aplikasi, dan file ganda, menjelaskannya dengan bahasa sederhana, lalu hanya memindahkan yang kamu setujui ke Trash.',
+      locale: 'id_ID',
+      image: '/og-id.png',
+      imageAlt: 'Respite, pembersih Mac yang bertanya dulu, di samping layar Berandanya',
+    },
     nav: { tools: 'Fitur', safety: 'Keamanan', faq: 'Tanya jawab', download: 'Unduh' },
     langLabel: 'Bahasa',
 

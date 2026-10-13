@@ -1,15 +1,32 @@
 <script>
-  import { copy, REPO, KOFI, TIP, VERSION } from './copy.js'
+  import { copy, REPO, KOFI, TIP, VERSION, SITE } from './copy.js'
   import ScanDemo from './ScanDemo.svelte'
 
-  const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('lang') : null
-  let lang = $state(stored ?? (navigator.language?.toLowerCase().startsWith('id') ? 'id' : 'en'))
+  // Language comes from the URL (/ or /id/) so each version is its own
+  // crawlable, prerendered page.
+  let { lang = 'en' } = $props()
   const t = $derived(copy[lang])
+  const other = $derived(lang === 'en' ? copy.id : copy.en)
 
-  $effect(() => {
-    document.documentElement.lang = lang
-    localStorage.setItem('lang', lang)
-  })
+  const jsonLd = $derived(JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Respite',
+    description: t.meta.description,
+    url: SITE + t.path,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'macOS 13 or later',
+    softwareVersion: '1.2.0',
+    inLanguage: ['en', 'id'],
+    downloadUrl: KOFI,
+    screenshot: SITE + '/screens/home.webp',
+    image: SITE + t.meta.image,
+    license: 'https://www.gnu.org/licenses/gpl-3.0.html',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: { '@type': 'Person', name: 'Khalid' },
+    sameAs: [REPO],
+  }).replace(/</g, '\\u003c'))
 
   const shots = ['/screens/home.webp', '/screens/uninstaller.webp', '/screens/memory.webp', '/screens/diagnostic.webp', '/screens/keyboard.webp']
   let shot = $state(0)
@@ -27,9 +44,34 @@
   }
 </script>
 
+<svelte:head>
+  <title>{t.meta.title}</title>
+  <meta name="description" content={t.meta.description} />
+  <link rel="canonical" href={SITE + t.path} />
+  <link rel="alternate" hreflang="en" href={SITE + '/'} />
+  <link rel="alternate" hreflang="id" href={SITE + '/id/'} />
+  <link rel="alternate" hreflang="x-default" href={SITE + '/'} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Respite" />
+  <meta property="og:url" content={SITE + t.path} />
+  <meta property="og:title" content={t.meta.title} />
+  <meta property="og:description" content={t.meta.description} />
+  <meta property="og:locale" content={t.meta.locale} />
+  <meta property="og:locale:alternate" content={other.meta.locale} />
+  <meta property="og:image" content={SITE + t.meta.image} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={t.meta.imageAlt} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={t.meta.title} />
+  <meta name="twitter:description" content={t.meta.description} />
+  <meta name="twitter:image" content={SITE + t.meta.image} />
+  {@html '<script type="application/ld+json">' + jsonLd + '</' + 'script>'}
+</svelte:head>
+
 <header>
   <div class="wrap bar">
-    <a href="/" class="brand">
+    <a href={t.path} class="brand">
       <img src="/favicon.png" alt="" width="28" height="28" />
       <span>Respite</span>
     </a>
@@ -40,8 +82,8 @@
     </nav>
     <div class="right">
       <div class="lang" role="group" aria-label={t.langLabel}>
-        <button type="button" aria-pressed={lang === 'en'} onclick={() => (lang = 'en')}>EN</button>
-        <button type="button" aria-pressed={lang === 'id'} onclick={() => (lang = 'id')}>ID</button>
+        <a href="/" hreflang="en" lang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+        <a href="/id/" hreflang="id" lang="id" aria-current={lang === 'id' ? 'page' : undefined}>ID</a>
       </div>
       <a class="get" href="#download">{t.nav.download}</a>
     </div>
@@ -270,7 +312,8 @@
     padding: 2px;
   }
 
-  .lang button {
+  .lang a {
+    text-decoration: none;
     font: inherit;
     font-size: 12.5px;
     font-weight: 600;
@@ -282,7 +325,7 @@
     cursor: pointer;
   }
 
-  .lang button[aria-pressed='true'] {
+  .lang a[aria-current='page'] {
     background: var(--sheet);
     color: var(--pine);
     box-shadow: 0 1px 2px rgba(18, 48, 42, 0.12);
