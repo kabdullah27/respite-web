@@ -1,0 +1,36 @@
+<!doctype html>
+<!-- Share image source. Render: scripts/og/render.sh (headless Chrome, 1200x630). -->
+<html>
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;800&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { background: #e6ecea; color: #12302a; font-family: 'Schibsted Grotesk', sans-serif; position: relative; }
+  .copy { position: absolute; left: 72px; top: 64px; width: 470px; }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+  .brand img { width: 52px; height: 52px; border-radius: 12px; }
+  h1 { text-wrap: balance; margin-top: 64px; font-size: 76px; line-height: 0.96; font-weight: 800; letter-spacing: -0.045em; }
+  p { text-wrap: balance; margin-top: 28px; font-size: 25px; line-height: 1.35; font-weight: 500; color: #50645e; }
+  .id h1 { font-size: 66px; }
+  .shot { position: absolute; left: 600px; top: 92px; width: 860px; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(18,48,42,.25), 0 40px 80px -30px rgba(18,48,42,.55); }
+  .shot img { display: block; width: 100%; }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <div class="brand"><img src="../../public/favicon.png" alt="" />Respite</div>
+    <h1 id="h"></h1>
+    <p id="p"></p>
+  </div>
+  <div class="shot"><img src="../../public/screens/home.webp" alt="" /></div>
+  <script>
+    const id = location.hash === '#id'
+    if (id) document.body.classList.add('id')
+    document.getElementById('h').textContent = id ? 'Pembersih Mac yang bertanya dulu.' : 'A Mac cleaner that asks first.'
+    document.getElementById('p').textContent = id ? 'Gratis, open source, untuk macOS 13 ke atas.' : 'Free and open source, for macOS 13 or later.'
+  </script>
+</body>
+</html>
